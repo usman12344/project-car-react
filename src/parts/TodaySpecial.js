@@ -1,10 +1,42 @@
-import React from 'react';
+import fetch from 'helper/fetch/index'
+import Carousel from 'components/Carousel/index';
+import useAsync from 'helper/hooks/useAsync';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+
+function Loading(){
+  return Array(6).fill().map((_, index) => {
+    return <div key={index} className="px-4 relative card group">
+    <div className="rounded-xl bg-[#2C2C2C] overflow-hidden card-shadow" style={{width:287, height: 251}}>
+    </div>
+      <h5 className="h-3 bg-[#2C2C2C] rounded-full mt-3 w-36 mx-auto"></h5>
+      <h2 className="h-3  bg-[#2C2C2C] rounded-full mt-3 w-26"><span className="h-3 bg-yellow-500 rounded-full mt-3 w-24"></span> </h2>
+  </div>
+  })
+}
+
+
+
 export default function TodaySpecial() {
+
+  const {data, error, run, isLoading} = useAsync();
+
+  const refContainer = useRef(null);
+  
+  useEffect(() => {
+    run(
+      fetch(
+        { url : "/api/products/?page=1&limit=10" }
+      )
+    )
+  }, [run])
+  
+  // console.log(data,status,error);
+
   return (
 
-    <section className="flex flex-col md:py-16 md:px-4 mt-60 md:mt-0" id="today">
+    <section className="flex flex-col md:py-16  mt-60 md:mt-0" id="today">
 
       <div className="container md:mx-auto md:px-20">
         <div className="md:flex flex-start mb-4 justify-center items-center">
@@ -42,156 +74,32 @@ export default function TodaySpecial() {
         </div>
       </div>
 
-        <div className="overflow-x-hidden   py-4" id="carousel">
-          <div className="container mx-auto"></div>
+        <div className="overflow-x-hidden px-4" id="carousel">
+          <div className="container mx-auto" ref={refContainer}></div>
 
-            <div className="flex -mx-4 flex-row relative">
-            {/* <!-- START: item carousel 1 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-
-            {/* <!-- END: item carousel 1 -->
-
-            <!-- START: item carousel 2 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/innova.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-
-            {/* <!-- END: item carousel 2 -->
-            <!-- START: item carousel 3 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/sportcar.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-{/* 
-            <!-- END: item carousel 3 -->
-            <!-- START: item carousel 4 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-
-            {/* <!-- END: item carousel 4 -->
-            <!-- START: item carousel 5 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-
-            {/* <!-- END: item carousel 5 -->
-            <!-- START: item carousel 5 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-
-            {/* <!-- END: item carousel 5 -->
-             <!-- START: item carousel 5 --> */}
-
-             <div className="px-4 relative card">
-              <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-              </div>
-              <div>
-                <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                <Link to="#details.html" className="stretched-link">
-                  {/* <!-- fake children --> */}
-                </Link>
-              </div>
-            </div>
-
-        {/* <!-- END: item carousel 5 --> <!-- START: item carousel 5 --> */}
-
-                <div className="px-4 relative card">
-                  <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                    <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-                  </div>
-                  <div>
-                    <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                    <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                    <Link to="#details.html" className="stretched-link">
-                      {/* <!-- fake children --> */}
-                    </Link>
-                  </div>
-                </div>
-
-            {/* <!-- END: item carousel 5 --> */}
-             {/* <!-- END: item carousel 5 --> <!-- START: item carousel 5 --> */}
-
-             <div className="px-4 relative card">
-              <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
-                <img src="/images/content/marcedez.png" alt="" className="w-full h-full object-cover object-center" />
-              </div>
-              <div>
-                <h5 className="text-lg font-semibold mt-4 text-white text-center">MARCEDEZ</h5>
-                <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">IDR 500.000 <span className="text-gray-500 ">/ Per Day</span> </h2>
-                <Link to="#details.html" className="stretched-link">
-                  {/* <!-- fake children --> */}
-                </Link>
-              </div>
-            </div>
-
-        {/* <!-- END: item carousel 5 --> */}
+               
+              {
+                 isLoading ?<div className="flex -mx-4 flex-row relative"> <Loading /></div>  : error ? JSON.stringify(error) : data.data.length === 0 ? "No Product Found" : <Carousel refContainer={refContainer}>
+                 {data.data.map((item) => {
+                   return  <div key={item.id} className="px-4 relative card">
+                   <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
+                     <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover object-center" />
+                   </div>
+                   
+                     <h5 className="text-lg font-semibold mt-4 text-white text-center">{item.title}</h5>
+                     <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">{item.price}<span className="text-gray-500 ">/ Per Day</span> </h2>
+                     <Link to="/products/:id" className="stretched-link">
+                       {/* <!-- fake children --> */}
+                     </Link>
+                   
+                 </div>
+                 })}
+                 </Carousel>
+                }
+              
+           
             
-            </div>
+           
         </div>
     </section>
 

@@ -17,8 +17,13 @@ body {
         @apply -mt-96;
     }
     .card .card-shadow {
-        @apply transition duration-300 shadow-none;
+        @apply transition duration-300 shadow-none ;
     }
+
+    .card:hover .card-shadow {
+        @apply shadow-lg;
+    }
+    
      html {
         scroll-behavior: smooth;
     }
