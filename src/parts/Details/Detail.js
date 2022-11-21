@@ -1,7 +1,16 @@
+import { useGlobalContext } from 'helper/hooks/useGlobalContext';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import parse from 'react-html-parser';
 
-export default function Detail() {
+
+export default function Detail({ data }) {
+  console.log(data)
+  const [slider, setSlider] = React.useState(() => data?.imgUrls?.[0] || "")
+  const [cost, setCost] = React.useState(() => data?.price || "")
+  // console.log(cost)
+
+  const {state, dispatch } = useGlobalContext();
+  console.log(state)
   return (
 
 
@@ -9,79 +18,59 @@ export default function Detail() {
         <div className="flex flex-wrap my-4 md:my-12">
           <div className="w-full md:hidden px-4 text-white">
             <h2 className="text-5xl font-semibold">
-              Chair Thatty
+            {data.title}
             </h2>
-            <span className="text-xl" id="costt2"></span>
+            <span className="text-xl" id="costt2">IDR {cost}</span>
           </div>
           <div className="flex-1">
             <div className="slider">
               <div className="thumbnail">
-                {/* <!-- START: slideshow thumbnail item 1 --> */}
-                <div className="px-2">
-                  <div className="item selected" data-img="/images/content/picdetail.png">
-                    <img src="/images/content/picdetail.png" alt="chair side" className="object-cover w-full h-full rounded-lg" />
+          
+                {
+                  data.imgUrls.map((item, index) => {
+                    return <div className="px-2" key={index} onClick={() => setSlider(item)}>
+                    <div className={["item", slider === item ? "bg-gray-100 selected" : ""].join(" ")}>
+                      <img src={item} alt={item} className="object-cover w-full h-full rounded-lg" />
+                    </div>
                   </div>
-                </div>
-                {/* <!-- END: slideshow thumbnail item 1 --> */}
-  
-                {/* <!-- START: slideshow thumbnail item 2 --> */}
-                <div className="px-2">
-                  <div className="item" data-img="/images/content/pic(2).jpg">
-                    <img src="/images/content/pic(2).jpg" alt="chair side" className="object-cover w-full h-full rounded-lg" />
-                  </div>
-                </div>
-                {/* <!-- END: slideshow thumbnail item 2 --> */}
-  
-                 {/* <!-- START: slideshow thumbnail item 3 --> */}
-                 <div className="px-2">
-                  <div className="item" data-img="/images/content/pic(3).jpg">
-                    <img src="/images/content/pic(3).jpg" alt="chair side" className="object-cover w-full h-full rounded-lg" />
-                  </div>
-                </div>
-                {/* <!-- END: slideshow thumbnail item 3 --> */}
-  
-                 {/* <!-- START: slideshow thumbnail item 4 --> */}
-                 <div className="px-2">
-                  <div className="item" data-img="/images/content/pic(4).jpg">
-                    <img src="/images/content/pic(4).jpg" alt="chair side" className="object-cover w-full h-full rounded-lg" />
-                  </div>
-                </div>
-                {/* <!-- END: slideshow thumbnail item 4 --> */}
-  
-                 {/* <!-- START: slideshow thumbnail item 5 --> */}
-                 <div className="px-2">
-                  <div className="item" data-img="/images/content/pic(5).jpg">
-                    <img src="/images/content/pic(5).jpg" alt="chair side" className="object-cover w-full h-full rounded-lg" />
-                  </div>
-                </div>
-                {/* <!-- END: slideshow thumbnail item 5 --> */}
+                  })
+                }
+
+                
+
               </div>
               <div className="preview">
                 <div className=" rounded-lg h-full overflow-hidden">
-                  <img src="/images/content/picdetail.png" alt="" className="object-cover w-full h-full rounded-lg" />
+                  <img src={slider} alt={slider} className="object-cover w-full h-full rounded-lg" />
                 </div>
               </div>
+              </div>
             </div>
-          </div>
+          
           <div className="flex-1 px4 md:p-6 text-white px-4">
             <div className="hidden md:block">
               <h2 className="text-5xl font-semibold">
-                Chair Thatty
+                {data.title}
               </h2>
-              <p className="text-lg" id="costt">
-                
+              <p className="text-xl mt-2" id="costt">
+                IDR {cost}
               </p>  
             </div>
             <div>
-              <label htmlFor="cars" className="text-white mt-3">Rent For :</label>
-                <select name="cars" id="cars" className="bg-yellow-500 text-black rounded-lg mt-3">
-                  <option value={1}>1 Day</option>
-                  <option value={2}>2 Day</option>
-                  <option value={3}>3 Day</option>
-                  <option value={7}>7 Day</option>
-                </select>
+              <div htmlFor="cars" className="text-white mt-3 flex items-center">Rent For :
+                <div name="cars" id="cars" className="bg-yellow-500 text-black rounded-lg mx-5 px-2" onClick={(()=> setCost(data.price * 1, ))}>1 Day
+                </div>
+                <div name="cars" id="cars" className="bg-yellow-500 text-black rounded-lg mx-5 px-2" onClick={(()=> setCost(data.price * 2))}>2 Day
+                </div>
+                <div name="cars" id="cars" className="bg-yellow-500 text-black rounded-lg mx-5 px-2" onClick={(()=> setCost(data.price * 3))}>3 Day
+                </div>
+                <div name="cars" id="cars" className="bg-yellow-500 text-black rounded-lg mx-5 px-2" onClick={(()=> setCost(data.price * 7))}>7 Day
+                </div>
+                </div>
             </div>
-            <Link to={`/cart`} className="transition-all duration-200 bg-yellow-500 text-black focus:bg-black focus:text-pink-400 rounded-full px-8 py-3 mt-4 inline-flex md:w-auto w-full justify-center ">
+            <button className="transition-all duration-200 bg-yellow-500 text-black focus:bg-black focus:text-pink-400 rounded-full px-8 py-3 mt-4 inline-flex md:w-auto w-full justify-center" onClick={() => dispatch({
+              type: "ADD_TO_CART", item: data,
+            })}>
               <svg className="fill-current mr-3" width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10.8754 19.9824C9.61762 19.9824 8.59436 21.023 8.59436 22.3021C8.59436 23.5812 9.61762 24.6218 10.8754 24.6218C12.1331 24.6218 13.1564 23.5812 13.1564 22.3021C13.1563 21.023 12.1331 19.9824 10.8754 19.9824ZM10.8754 23.3265C10.3199 23.3265 9.86796 22.8669 9.86796 22.302C9.86796 21.7371 10.3199 21.2775 10.8754 21.2775C11.4308 21.2775 11.8828 21.7371 11.8828 22.302C11.8828 22.867 11.4308 23.3265 10.8754 23.3265Z"/>
                 <path d="M18.8764 19.9824C17.6186 19.9824 16.5953 21.023 16.5953 22.3021C16.5953 23.5812 17.6186 24.6218 18.8764 24.6218C20.1342 24.6218 21.1575 23.5812 21.1575 22.3021C21.1574 21.023 20.1341 19.9824 18.8764 19.9824ZM18.8764 23.3265C18.3209 23.3265 17.869 22.8669 17.869 22.302C17.869 21.7371 18.3209 21.2775 18.8764 21.2775C19.4319 21.2775 19.8838 21.7371 19.8838 22.302C19.8838 22.867 19.4319 23.3265 18.8764 23.3265Z"/>
@@ -90,25 +79,17 @@ export default function Detail() {
                 <path d="M25.6499 4.88395C25.407 4.58083 25.0472 4.40701 24.6626 4.40701H4.82655L4.42595 2.42938C4.34232 2.01685 4.06563 1.67046 3.68565 1.50267L0.890528 0.268871C0.567841 0.126328 0.192825 0.276908 0.0528584 0.604959C-0.0872597 0.933113 0.0608116 1.31453 0.383347 1.45687L3.17852 2.69072L6.2598 17.9013C6.38117 18.5003 6.90578 18.9351 7.50723 18.9351H22.7635C23.1152 18.9351 23.4003 18.6451 23.4003 18.2875C23.4003 17.9298 23.1152 17.6399 22.7635 17.6399H7.50728L7.13247 15.7896H22.8814C23.4828 15.7896 24.0075 15.3548 24.1288 14.7558L25.9101 5.9634C25.9876 5.58054 25.8928 5.18701 25.6499 4.88395ZM22.8814 14.4945H6.87012L5.08895 5.70217L24.6626 5.70222L22.8814 14.4945Z"/>
                 </svg>
                  Add To Chart
-            </Link>
+            </button>
             <div className="my-8 text-white ">
               <h6 className="text-xl font-semibold mb-4 mt-5">
                 About the product
               </h6>
-              <p className="text-xl leading mb-6">
-                Tailored to a level of perfection synonymous with that
-                of a Savile Row suit and with understated quality in the
-                detail, Jetty has been influenced by timeless 1950s style.
-                </p>
-                <p className="text-xl leading mb-6">
-                Providing a subtle nod to the past, Jetty also provides
-                a perfect solution htmlFor the way we work today. 
-                A comprehensive product family, Jetty features a variety
-                of elegant chairs and sofas.
-              </p>
+              {
+                data.description ? parse(data.description) : ""
+              }
             </div>
           </div>
-        </div>
+          </div>
       </section>
   
 

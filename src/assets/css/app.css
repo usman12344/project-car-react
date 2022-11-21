@@ -24,11 +24,11 @@ body {
         @apply shadow-lg;
     }
     
-     html {
+    html {
         scroll-behavior: smooth;
     }
 
-    /* breadcrumb */
+   /* breadcrumb */
     ul.breadcrumb {
         @apply flex flex-row items-center text-lg;
     }
@@ -101,4 +101,12 @@ body {
 button[disabled] {
     @apply bg-gray-300 hover:bg-gray-300 text-gray-400 hover:text-gray-400 
     cursor-not-allowed;
+}
+
+
+a.cart svg g circle.dot {
+    @apply hidden;
+}
+a.cart.cart-filled svg g circle.dot {
+    @apply block;
 }

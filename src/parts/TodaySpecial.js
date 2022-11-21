@@ -88,7 +88,7 @@ export default function TodaySpecial() {
                    
                      <h5 className="text-lg font-semibold mt-4 text-white text-center">{item.title}</h5>
                      <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">{item.price}<span className="text-gray-500 ">/ Per Day</span> </h2>
-                     <Link to="/products/:id" className="stretched-link">
+                     <Link to={`/products/${item.id}`} className="stretched-link">
                        {/* <!-- fake children --> */}
                      </Link>
                    
