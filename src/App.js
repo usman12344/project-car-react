@@ -4,8 +4,8 @@ import HomePage from 'pages/HomePage';
 import Details from 'pages/Details';
 import Cart from 'pages/Cart';
 import Congratulation from 'pages/Congratulation';
-import PageErrorMessage from 'parts/PageErrorMessage';
 import Provider from 'helper/hooks/useGlobalContext';
+import Notfound from 'pages/NotFound';
 
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
       <Route path="/products/:idp" element={<Details />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/congratulation" element={<Congratulation />} />
-      <Route path="*" element={<PageErrorMessage />} />
+      <Route path="*" element={<Notfound />} />
     </Routes>
     </BrowserRouter>
     </Provider>

@@ -1,10 +1,12 @@
 import Breadcrumb from 'components/Breadcrumb.js';
+import useScrollToTop from 'helper/hooks/useScrollToTop';
 import Footer from 'parts/Footer';
 import Header from 'parts/Header';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Congratulation() {
+  useScrollToTop();
   return (
     <>
     <Header />

@@ -4,13 +4,13 @@ import parse from 'react-html-parser';
 
 
 export default function Detail({ data }) {
-  console.log(data)
+  // console.log(data)
   const [slider, setSlider] = React.useState(() => data?.imgUrls?.[0] || "")
   const [cost, setCost] = React.useState(() => data?.price || "")
   // console.log(cost)
 
-  const {state, dispatch } = useGlobalContext();
-  console.log(state)
+  const { dispatch } = useGlobalContext();
+  // console.log(state)
   return (
 
 
@@ -20,15 +20,15 @@ export default function Detail({ data }) {
             <h2 className="text-5xl font-semibold">
             {data.title}
             </h2>
-            <span className="text-xl" id="costt2">IDR {cost}</span>
+            <span className="text-xl" id="costt2">{cost.currency()}</span>
           </div>
           <div className="flex-1">
             <div className="slider">
               <div className="thumbnail">
           
                 {
-                  data.imgUrls.map((item, index) => {
-                    return <div className="px-2" key={index} onClick={() => setSlider(item)}>
+                  data?.imgUrls?.map(item => {
+                    return <div className="px-2" key={item} onClick={() => setSlider(item)}>
                     <div className={["item", slider === item ? "bg-gray-100 selected" : ""].join(" ")}>
                       <img src={item} alt={item} className="object-cover w-full h-full rounded-lg" />
                     </div>
@@ -53,7 +53,7 @@ export default function Detail({ data }) {
                 {data.title}
               </h2>
               <p className="text-xl mt-2" id="costt">
-                IDR {cost}
+                {cost.currency()}
               </p>  
             </div>
             <div>

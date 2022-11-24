@@ -10,7 +10,7 @@ export default function PageErrorMessage({ title="404 NOT FOUND", body="Looks li
             <div className="w-full md:w-4/12 text-center">
               <img src={Notfound} alt="Not Found" />
               <h2 className="text-3xl font-semibold mb-6">{title}</h2>
-              <p className="text-lg mb-12">F{body}</p>
+              <p className="text-lg mb-12">{body}</p>
               <Link to="/" className="text-gray-900 bg-red-200 focus:outline-none w-full py-3 rounded-full text-lg focus:text-black transition duration-200 px-8">Back to Shop</Link>
             </div>
           </div>

@@ -3,15 +3,16 @@ import Carousel from 'components/Carousel/index';
 import useAsync from 'helper/hooks/useAsync';
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import 'helper/format/currency';
 
 
 function Loading(){
   return Array(6).fill().map((_, index) => {
-    return <div key={index} className="px-4 relative card group">
+    return <div className="px-4 relative card group" key={index}>
     <div className="rounded-xl bg-[#2C2C2C] overflow-hidden card-shadow" style={{width:287, height: 251}}>
     </div>
-      <h5 className="h-3 bg-[#2C2C2C] rounded-full mt-3 w-36 mx-auto"></h5>
-      <h2 className="h-3  bg-[#2C2C2C] rounded-full mt-3 w-26"><span className="h-3 bg-yellow-500 rounded-full mt-3 w-24"></span> </h2>
+      <div className="h-3 bg-[#2C2C2C] rounded-full mt-3 w-36 mx-auto"></div>
+      <div className="h-3 bg-[#2C2C2C] rounded-full mt-3 w-26"><span className="h-3 bg-yellow-500 rounded-full mt-3 w-24"></span></div>
   </div>
   })
 }
@@ -79,7 +80,7 @@ export default function TodaySpecial() {
 
                
               {
-                 isLoading ?<div className="flex -mx-4 flex-row relative"> <Loading /></div>  : error ? JSON.stringify(error) : data.data.length === 0 ? "No Product Found" : <Carousel refContainer={refContainer}>
+                 isLoading ?<div className="flex -mx-4 flex-row relative" style={{paddingLeft: refContainer.current?.getBoundingClientRect?.()?.left - 16 || 0}}> <Loading /></div>  : error ? JSON.stringify(error) : data.data.length === 0 ? "No Product Found" : <Carousel refContainer={refContainer}>
                  {data.data.map((item) => {
                    return  <div key={item.id} className="px-4 relative card">
                    <div className="rounded-xl overflow-hidden card-shadow" style={{width:287}}>
@@ -87,7 +88,7 @@ export default function TodaySpecial() {
                    </div>
                    
                      <h5 className="text-lg font-semibold mt-4 text-white text-center">{item.title}</h5>
-                     <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">{item.price}<span className="text-gray-500 ">/ Per Day</span> </h2>
+                     <h2 className="px-8 md:px-0 text-yellow-100 md:text-center text-center">{item.price.currency()}<span className="text-gray-500 ">/ Per Day</span> </h2>
                      <Link to={`/products/${item.id}`} className="stretched-link">
                        {/* <!-- fake children --> */}
                      </Link>

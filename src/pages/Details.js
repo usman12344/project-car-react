@@ -7,6 +7,8 @@ import Footer from 'parts/Footer';
 import Header from 'parts/Header';
 import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
+import PageErrorMessage from 'parts/PageErrorMessage';
+import useScrollToTop from 'helper/hooks/useScrollToTop';
 
 
 function LoadingProductDetail(){
@@ -60,20 +62,20 @@ function LoadingProductDetail(){
         <h6 className="w-44 h-3 bg-gray-300 mb-4 mt-5 rounded-lg">
         </h6>
         <br></br>
-        <p class="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
+        <p className="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
                 </p>
-                <p class="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
+                <p className="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
               </p>
-                <p class="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
+                <p className="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
               </p>
-                <p class="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
+                <p className="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
               </p>
               <br></br>
-              <p class="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
+              <p className="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
               </p>
-              <p class="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
-              </p><p class="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
-              </p><p class="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
+              <p className="w-80 h-3 bg-gray-300 mb-6 rounded-lg">
+              </p><p className="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
+              </p><p className="w-96 h-3 bg-gray-300 mb-6 rounded-lg">
               </p>
       </div>
     </div>
@@ -91,8 +93,8 @@ function LoadingSuggestion(){
     </div>
     <div className="flex flex-wrap overflow-x-auto mb-4 -mx-3">
       {
-        Array(4).fill().map(index => {
-          return <div className="relative px-3 w-full md:w-3/12 mb-4" key={index}>
+        Array(4).fill().map((_,item) => {
+          return <div className="relative px-3 w-full md:w-3/12 mb-4" key={item}>
           <div className="rounded-xl p-4 pb-8 relative bg-gray-300 animate-pulse">
             <div className="bg-gray-500 rounded-xl overflow-hidden w-full h-48">
             </div>
@@ -111,7 +113,7 @@ function LoadingSuggestion(){
 export default function Details() {
   const {idp} = useParams();
 
-  const { data, error, isLoading,run} = useAsync();
+  const { data, isError, error, isLoading,run} = useAsync();
 
   useEffect(() => {
     run(
@@ -122,9 +124,10 @@ export default function Details() {
   
   }, [run,idp])
   
-console.log(data);
-
+// console.log(data);
+useScrollToTop();
   return (
+    
     <>
     <Header />
     <Breadcrumb List={[
@@ -134,12 +137,19 @@ console.log(data);
     ]} />
 
     {
-      isLoading ? <LoadingProductDetail /> : <Detail data={data} />
-    }
+      isError ? <PageErrorMessage title="Product Not Found" body={error.errors.message} /> :
+      <>
+        {
+           isLoading ? <LoadingProductDetail /> : <Detail data={data} />
+        }
 
-    {
-      isLoading ? <LoadingSuggestion /> : <Suggestion data={data?.relatedProducts || {}} />
+        {
+          isLoading ? <LoadingSuggestion /> : <Suggestion data={data?.relatedProducts || {} } />
+        }
+      </>
     }
+    
+    
     
     <Footer />
     </>

@@ -1,4 +1,5 @@
 import Breadcrumb from 'components/Breadcrumb.js';
+import useScrollToTop from 'helper/hooks/useScrollToTop';
 import ShippingCart from 'parts/Cart/ShippingCart';
 import ShippingDetails from 'parts/Cart/ShippingDetails';
 import Footer from 'parts/Footer';
@@ -6,6 +7,7 @@ import Header from 'parts/Header';
 import React from 'react';
 
 export default function Cart() {
+  useScrollToTop();
   return (
     <>
     <Header />

@@ -16,7 +16,7 @@ export default function Footer() {
       <div className="relative md:flex md:justify-star md:items-start md:w-1/2 w-full">
         <div className="block">
           <div className="mx-20 md:mx-0 mb-4">
-            <input type="text" id="name" className="border rounded hover:borderr" style={{backgroundColor: '#000000'}} placeholder=" Name" />
+            <input type="text" id="name" className="border rounded hover:borderr" style={{backgroundColor: '#000000', Color:'#ffffff'}} placeholder=" Name" />
           </div>
           <div className="mx-20 md:mx-0 mb-4">
             <input type="email" id="Email" className="border rounded hover:borderr" style={{backgroundColor: '#000000'}} placeholder=" Email" />
@@ -27,7 +27,7 @@ export default function Footer() {
         </div>
         <div className="block mb-4 ml-3">
           <textarea name="Message" cols="30" rows="3" placeholder=" Catatan" className="border rounded hover:borderr mx-10 md:mx-0 " style={{backgroundColor: '#000000'}}></textarea>
-          <a href="#" className="block borderr text-white bg-yellow-500 text-center py-1 mx-20 md:mx-0">SEND</a>
+          <button href="#" className="block borderr text-white bg-yellow-500 text-center py-1 mx-20 md:mx-0 p-20">SEND</button>
         </div>
       </div>
     </section>
