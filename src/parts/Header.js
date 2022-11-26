@@ -19,6 +19,7 @@ export default function Header({ position }) {
           setCartChanged(false)
       }, 550);
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.cart])
 
 
